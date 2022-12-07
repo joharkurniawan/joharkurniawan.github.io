@@ -1,3 +1,5 @@
+const tx = document.getElementsByTagName("textarea");
+var isauto = false;
 function geturl() {
     var url = document.getElementById("urlinput").value;
     return url
@@ -26,16 +28,47 @@ function urlify(text) {
     })
 }
 
-const tx = document.getElementsByTagName("textarea");
-for (let i = 0; i < tx.length; i++) {
-    tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
-    tx[i].addEventListener("input", OnInput, false);
-    //tx[i].addEventListener("input", shorturl, false);
+function change() {
+    var decider = document.getElementById('toggleauto');
+    if (decider.checked) {
+        isauto = true;
+        alwaysDo()
+    } else {
+        isauto = false;
+        alwaysDo()
+    }
 }
+
+function alwaysDo() {
+    for (let i = 0; i < tx.length; i++) {
+        tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight));
+        tx[i].addEventListener("input", OnInput, false);
+        if (isauto == true) {
+            tx[i].addEventListener("input", shorturl, false);
+        } else {
+            tx[i].removeEventListener("input", shorturl, false);
+        }
+    }
+}
+
+alwaysDo()
 
 function OnInput() {
     this.style.height = 0;
     this.style.height = (this.scrollHeight) + "px";
+}
+
+function Copy() {
+    var copyText = document.getElementById("output");
+
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+
+    navigator.clipboard.writeText(copyText.value);
+}
+
+function Refresh() {
+    location.reload();
 }
 
 var hashh = window.location.hash.substr(1)
