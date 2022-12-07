@@ -47,6 +47,5 @@ if (window.location.hash != "") {
         if (data != null) {
             window.location.href = data;
         }
-
     });
 }
