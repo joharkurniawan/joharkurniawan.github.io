@@ -13,7 +13,7 @@ function send_request(url) {
     fetch('https://api2.branch.io/v1/url?url=' + this.url + '&branch_key=key_live_abhHgIh1DQiuPxdBNg9EXepdDugwwkHr', options)
         .then(response => response.json())
         .then(response => responseText.innerHTML += response['data']['$desktop_url'] + '\r\n')
-        .catch(err => console.error(err));
+        .catch(err => {console.error(err), responseText.innerHTML += url + ' <--- URL NOT FOUND OR INVALID LINK' + '\r\n'});
 }
 
 function shorturl() {
